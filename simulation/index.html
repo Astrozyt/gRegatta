@@ -6,11 +6,31 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>gRegatta: World</title>
-    <script type="module" src="app.ts"></script>
+    <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
+    <script src="app.js"></script>
 </head>
 <script>
-    function sendRequest() {
-        fetch('/', {
+    // function sendRequest() {
+    //     // fetch('/', {
+    //     //     method: "post",
+    //     //     headers: {
+    //     //         'Accept': 'application/json',
+    //     //         'Content-Type': 'application/json'
+    //     //     },
+    //     // }).then(response => response.json())
+    //     //     .then(function (response) {
+    //     //         console.dir('Rudder angle: ' + response.rudder);
+    //     //     })
+    //     boat.rotation = boat.rotation + 10;
+    //     stage.update();
+    // };
+
+    function steer(value) {
+        boat.rotation = boat.rotation + value;
+    }
+
+    function draw() {
+        fetch('/astar', {
             method: "post",
             headers: {
                 'Accept': 'application/json',
@@ -18,17 +38,27 @@
             },
         }).then(response => response.json())
             .then(function (response) {
-                console.dir('Rudder angle: ' + response.rudder);
+                var myArray = response.path;
+                myPath = new createjs.Shape();
+                myPath.graphics.beginStroke("black").setStrokeStyle(2);
+                myPath.graphics.moveTo(myArray[0][0], myArray[0][1]);
+                for(var i = 1; i < myArray.length; i+=1) {
+                    console.log(myArray[i][0], myArray[i][1])
+                    myPath.graphics.lineTo(myArray[i][0], myArray[i][1]);
+                }
+                stage.addChild(myPath);
+                stage.update();
             })
-    };
+    }
 
 </script>
 
 <body>
-    <div>Rudder angle: <p id="angle"></p>
-    </div>
-    <button onclick="sendRequest()">0</button>
-    <canvas id="canvas" width="1000" height="1000"></canvas>
+
+    <canvas id="canvas" width="1900" height="200"></canvas>
+    <button onclick="steer(10)">Left</button>
+    <button onclick="steer(-10)">Right</button>
+    <button onclick="draw()">Draw AStar</button>
 </body>
 
 </html>

@@ -4,8 +4,9 @@
   "description": "A project (Milestone 3) for the course \"Applied Computational Intelligence\" of my studies in Medical Informatics @ FHNW.",
   "main": "index.js",
   "scripts": {
-    "start": "node index.ts",
+    "server": "node index.ts",
     "front": "parcel simulation/index.html",
+    "start": "parcel build simulation/index.html --dist-dir simulation/dist --public-url ./",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,7 +20,8 @@
   },
   "homepage": "https://github.com/Greg8052/gRegatta#readme",
   "dependencies": {
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "pathfinding": "^0.4.18"
   },
   "devDependencies": {
     "@types/node": "^18.16.1",
