@@ -1,1 +1,4 @@
 node_modules
+.parcel-cache
+*/EaselJS-1.0.0/*
+dist
